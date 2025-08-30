@@ -82,14 +82,6 @@
       ]
     }
   },
-  "ZDownloadManager/tests/test_scraper.py": {
-    "functions": [],
-    "classes": {
-      "ScraperTests": [
-        "test_example_com(self)"
-      ]
-    }
-  },
   "ZDownloadManager/tests/test_suggestions_cache.py": {
     "functions": [],
     "classes": {
@@ -101,6 +93,14 @@
         "test_cli_custom_params(self)",
         "test_streaming(self)",
         "test_cli_stream(self)"
+      ]
+    }
+  },
+  "ZDownloadManager/tests/test_webscraper.py": {
+    "functions": [],
+    "classes": {
+      "WebScraperTests": [
+        "test_example_com(self)"
       ]
     }
   },
@@ -201,12 +201,6 @@
       ]
     }
   },
-  "ZDownloadManager/zdownloadmanager/core/scraper.py": {
-    "functions": [
-      "scrape_links(url, extensions)"
-    ],
-    "classes": {}
-  },
   "ZDownloadManager/zdownloadmanager/core/suggestions.py": {
     "functions": [
       "_cache_file(config)",
@@ -216,6 +210,22 @@
       "stream_suggestion(config, question, model)"
     ],
     "classes": {}
+  },
+  "ZDownloadManager/zdownloadmanager/core/webscraper.py": {
+    "functions": [
+      "_get_session()",
+      "scrape_page(url, headings, images, meta, summary, links, timeout)",
+      "scrape_links(url, timeout)",
+      "scrape_site(url, depth, headings, images, meta, summary, links, timeout, parallel, max_workers)"
+    ],
+    "classes": {
+      "_SimpleHTMLParser": [
+        "__init__(self)",
+        "handle_starttag(self, tag, attrs)",
+        "handle_endtag(self, tag)",
+        "handle_data(self, data)"
+      ]
+    }
   },
   "ZDownloadManager/zdownloadmanager/integration/native_messaging_host.py": {
     "functions": [

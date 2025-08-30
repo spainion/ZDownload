@@ -225,7 +225,7 @@ def main(argv: Optional[list[str]] = None) -> None:
             print("No suggestion available")
         return
     if args.scrape:
-        from .core.scraper import scrape_links
+        from .core.webscraper import scrape_links
 
         links = scrape_links(args.scrape)
         for link in links:
