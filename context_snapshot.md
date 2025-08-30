@@ -161,7 +161,7 @@ The `Makefile` mirrors these commands with shortcuts (`make lint`, `make test`, 
 
 The snapshot intentionally omits the most recent commit in its log so the `--check` verification remains stable after commits.
 
-Current version: 0.1.28
+Current version: 0.1.29
 
 # File: ZDownloadManager/README.md
 
@@ -428,10 +428,6 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
 - class OrganizerTests
   - test_normalize_filename(self)
 
-## ZDownloadManager/tests/test_scraper.py
-- class ScraperTests
-  - test_example_com(self)
-
 ## ZDownloadManager/tests/test_suggestions_cache.py
 - class SuggestionCacheTest
   - test_cache_reuse_without_key(self)
@@ -441,6 +437,10 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
   - test_cli_custom_params(self)
   - test_streaming(self)
   - test_cli_stream(self)
+
+## ZDownloadManager/tests/test_webscraper.py
+- class WebScraperTests
+  - test_example_com(self)
 
 ## ZDownloadManager/zdownloadmanager/__init__.py
 
@@ -513,15 +513,23 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
   - determine_category(self, filename)
   - organise(self, path)
 
-## ZDownloadManager/zdownloadmanager/core/scraper.py
-- scrape_links(url, extensions)
-
 ## ZDownloadManager/zdownloadmanager/core/suggestions.py
 - _cache_file(config)
 - read_cache(config)
 - clear_cache(config)
 - get_suggestion(config, question, model)
 - stream_suggestion(config, question, model)
+
+## ZDownloadManager/zdownloadmanager/core/webscraper.py
+- _get_session()
+- scrape_page(url, headings, images, meta, summary, links, timeout)
+- scrape_links(url, timeout)
+- scrape_site(url, depth, headings, images, meta, summary, links, timeout, parallel, max_workers)
+- class _SimpleHTMLParser
+  - __init__(self)
+  - handle_starttag(self, tag, attrs)
+  - handle_endtag(self, tag)
+  - handle_data(self, data)
 
 ## ZDownloadManager/zdownloadmanager/integration/native_messaging_host.py
 - read_message()
@@ -601,17 +609,17 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
 - ZDownloadManager/tests/test_library_cli.py: []
 - ZDownloadManager/tests/test_openrouter_models.py: []
 - ZDownloadManager/tests/test_organizer.py: []
-- ZDownloadManager/tests/test_scraper.py: []
 - ZDownloadManager/tests/test_suggestions_cache.py: []
+- ZDownloadManager/tests/test_webscraper.py: []
 - ZDownloadManager/zdownloadmanager/__init__.py: []
-- ZDownloadManager/zdownloadmanager/cli.py: ZDownloadManager/zdownloadmanager/core/config.py, ZDownloadManager/zdownloadmanager/core/downloader.py, ZDownloadManager/zdownloadmanager/core/library.py, ZDownloadManager/zdownloadmanager/core/organizer.py, ZDownloadManager/zdownloadmanager/core/scraper.py, ZDownloadManager/zdownloadmanager/core/suggestions.py
+- ZDownloadManager/zdownloadmanager/cli.py: ZDownloadManager/zdownloadmanager/core/config.py, ZDownloadManager/zdownloadmanager/core/downloader.py, ZDownloadManager/zdownloadmanager/core/library.py, ZDownloadManager/zdownloadmanager/core/organizer.py, ZDownloadManager/zdownloadmanager/core/suggestions.py, ZDownloadManager/zdownloadmanager/core/webscraper.py
 - ZDownloadManager/zdownloadmanager/core/config.py: []
 - ZDownloadManager/zdownloadmanager/core/downloader.py: []
 - ZDownloadManager/zdownloadmanager/core/github_adapter.py: []
 - ZDownloadManager/zdownloadmanager/core/library.py: ZDownloadManager/zdownloadmanager/core/config.py, ZDownloadManager/zdownloadmanager/core/organizer.py
 - ZDownloadManager/zdownloadmanager/core/organizer.py: ZDownloadManager/zdownloadmanager/core/config.py
-- ZDownloadManager/zdownloadmanager/core/scraper.py: []
 - ZDownloadManager/zdownloadmanager/core/suggestions.py: ZDownloadManager/zdownloadmanager/core/config.py
+- ZDownloadManager/zdownloadmanager/core/webscraper.py: ZDownloadManager/zdownloadmanager/core/config.py
 - ZDownloadManager/zdownloadmanager/integration/native_messaging_host.py: ZDownloadManager/zdownloadmanager/cli.py
 - ZDownloadManager/zdownloadmanager/integration/protocol_handler.py: ZDownloadManager/zdownloadmanager/cli.py
 - ZDownloadManager/zdownloadmanager/ui/actions_editor.py: ZDownloadManager/zdownloadmanager/core/config.py
@@ -624,19 +632,14 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
 
 ## Recent commits
 
+461b6a6 Add files via upload
+7e32e69 Merge pull request #1 from spainion/codex/extract-files-and-update-documentation
+d34b9e7 feat: query dependencies from CLI
 39e730b Add files via upload
 a300fa5 Initial commit
 
 ## Repository status
 
- M README.md
- M ZDownloadManager/README.md
- M ZDownloadManager/pyproject.toml
- M ZDownloadManager/tests/test_cli.py
- M ZDownloadManager/zdownloadmanager/__init__.py
- M ZDownloadManager/zdownloadmanager/cli.py
- M code_snapshot.json
- M code_snapshot.md
  M context_snapshot.json
  M context_snapshot.md
 ?? ZDownloadManager/tests/__pycache__/

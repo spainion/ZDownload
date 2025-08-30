@@ -47,10 +47,6 @@
 - class OrganizerTests
   - test_normalize_filename(self)
 
-## ZDownloadManager/tests/test_scraper.py
-- class ScraperTests
-  - test_example_com(self)
-
 ## ZDownloadManager/tests/test_suggestions_cache.py
 - class SuggestionCacheTest
   - test_cache_reuse_without_key(self)
@@ -60,6 +56,10 @@
   - test_cli_custom_params(self)
   - test_streaming(self)
   - test_cli_stream(self)
+
+## ZDownloadManager/tests/test_webscraper.py
+- class WebScraperTests
+  - test_example_com(self)
 
 ## ZDownloadManager/zdownloadmanager/__init__.py
 
@@ -132,15 +132,23 @@
   - determine_category(self, filename)
   - organise(self, path)
 
-## ZDownloadManager/zdownloadmanager/core/scraper.py
-- scrape_links(url, extensions)
-
 ## ZDownloadManager/zdownloadmanager/core/suggestions.py
 - _cache_file(config)
 - read_cache(config)
 - clear_cache(config)
 - get_suggestion(config, question, model)
 - stream_suggestion(config, question, model)
+
+## ZDownloadManager/zdownloadmanager/core/webscraper.py
+- _get_session()
+- scrape_page(url, headings, images, meta, summary, links, timeout)
+- scrape_links(url, timeout)
+- scrape_site(url, depth, headings, images, meta, summary, links, timeout, parallel, max_workers)
+- class _SimpleHTMLParser
+  - __init__(self)
+  - handle_starttag(self, tag, attrs)
+  - handle_endtag(self, tag)
+  - handle_data(self, data)
 
 ## ZDownloadManager/zdownloadmanager/integration/native_messaging_host.py
 - read_message()

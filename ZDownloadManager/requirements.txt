@@ -5,4 +5,3 @@ tqdm>=4.64
 python-dateutil>=2.8
 pre-commit>=3.7
 ruff>=0.1.0
-beautifulsoup4>=4.12

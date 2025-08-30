@@ -137,4 +137,4 @@ The `Makefile` mirrors these commands with shortcuts (`make lint`, `make test`, 
 
 The snapshot intentionally omits the most recent commit in its log so the `--check` verification remains stable after commits.
 
-Current version: 0.1.28
+Current version: 0.1.29
