@@ -43,6 +43,7 @@ ZDownloadManager is a cross-platform download manager and smart file organiser w
 - `--list-models` flag or `scripts/openrouter_models.py` to list OpenRouter models
 - Web scraping helper via `--scrape` to list page links
 - GitHub automation helper via `scripts/github_tools.py` to commit files, open pull requests, list issues, list pull requests, and show repository languages
+ - GitHub automation helper via `scripts/github_tools.py` to commit files, manage branches, open pull requests, list issues, list pull requests, and show repository languages
 - `--clear-suggestions-cache` flag to purge cached AI responses
 - `--suggest-stream` to stream AI answers for a question
 - `--show-suggestions-cache` flag to inspect cached AI responses
@@ -127,6 +128,15 @@ repository permissions.
 # Create or update a file
 GITHUB_TOKEN=xxx python scripts/github_tools.py commit-file owner/repo path/to/file "message" "content"
 
+# Commit multiple files in one commit
+GITHUB_TOKEN=xxx python scripts/github_tools.py commit-files owner/repo "message" path1="content" path2="other"
+
+# Create a branch
+GITHUB_TOKEN=xxx python scripts/github_tools.py create-branch owner/repo new-branch --from-branch main
+
+# Delete a branch
+GITHUB_TOKEN=xxx python scripts/github_tools.py delete-branch owner/repo old-branch
+
 # Open a pull request
 GITHUB_TOKEN=xxx python scripts/github_tools.py create-pr owner/repo "Title" user:branch --body "description"
 
@@ -161,7 +171,7 @@ The `Makefile` mirrors these commands with shortcuts (`make lint`, `make test`, 
 
 The snapshot intentionally omits the most recent commit in its log so the `--check` verification remains stable after commits.
 
-Current version: 0.1.29
+Current version: 0.1.31
 
 # File: ZDownloadManager/README.md
 
@@ -413,6 +423,7 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
   - test_list_open_issues(self)
   - test_list_open_pull_requests(self)
   - test_list_languages(self)
+  - test_create_branch_and_commit_files(self)
 
 ## ZDownloadManager/tests/test_library_cli.py
 - setup_home(tmp_path)
@@ -489,6 +500,9 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
   - __init__(self, token)
   - get_repo_info(self, full_name)
   - commit_file(self, repo_full_name, path, content, message, branch)
+  - commit_files(self, repo_full_name, files, message, branch)
+  - create_branch(self, repo_full_name, branch, from_branch)
+  - delete_branch(self, repo_full_name, branch)
   - create_pull_request(self, repo_full_name, title, body, head, base)
   - list_open_issues(self, repo_full_name, limit)
   - list_open_pull_requests(self, repo_full_name, limit)
@@ -632,6 +646,7 @@ After saving, right‑click any file in Finder and choose **Quick Actions → Se
 
 ## Recent commits
 
+5718947 chore: refresh context snapshots
 461b6a6 Add files via upload
 7e32e69 Merge pull request #1 from spainion/codex/extract-files-and-update-documentation
 d34b9e7 feat: query dependencies from CLI
@@ -640,11 +655,13 @@ a300fa5 Initial commit
 
 ## Repository status
 
+ M README.md
+ M ZDownloadManager/tests/test_github_adapter.py
+ M ZDownloadManager/zdownloadmanager/__init__.py
+ M ZDownloadManager/zdownloadmanager/core/github_adapter.py
+ M code_snapshot.json
+ M code_snapshot.md
  M context_snapshot.json
  M context_snapshot.md
-?? ZDownloadManager/tests/__pycache__/
-?? ZDownloadManager/zdownloadmanager/__pycache__/
-?? ZDownloadManager/zdownloadmanager/core/__pycache__/
-?? ZDownloadManager/zdownloadmanager/integration/__pycache__/
-?? ZDownloadManager/zdownloadmanager/ui/__pycache__/
+ M scripts/github_tools.py
 

@@ -19,6 +19,7 @@ ZDownloadManager is a cross-platform download manager and smart file organiser w
 - `--list-models` flag or `scripts/openrouter_models.py` to list OpenRouter models
 - Web scraping helper via `--scrape` to list page links
 - GitHub automation helper via `scripts/github_tools.py` to commit files, open pull requests, list issues, list pull requests, and show repository languages
+ - GitHub automation helper via `scripts/github_tools.py` to commit files, manage branches, open pull requests, list issues, list pull requests, and show repository languages
 - `--clear-suggestions-cache` flag to purge cached AI responses
 - `--suggest-stream` to stream AI answers for a question
 - `--show-suggestions-cache` flag to inspect cached AI responses
@@ -103,6 +104,15 @@ repository permissions.
 # Create or update a file
 GITHUB_TOKEN=xxx python scripts/github_tools.py commit-file owner/repo path/to/file "message" "content"
 
+# Commit multiple files in one commit
+GITHUB_TOKEN=xxx python scripts/github_tools.py commit-files owner/repo "message" path1="content" path2="other"
+
+# Create a branch
+GITHUB_TOKEN=xxx python scripts/github_tools.py create-branch owner/repo new-branch --from-branch main
+
+# Delete a branch
+GITHUB_TOKEN=xxx python scripts/github_tools.py delete-branch owner/repo old-branch
+
 # Open a pull request
 GITHUB_TOKEN=xxx python scripts/github_tools.py create-pr owner/repo "Title" user:branch --body "description"
 
@@ -137,4 +147,4 @@ The `Makefile` mirrors these commands with shortcuts (`make lint`, `make test`, 
 
 The snapshot intentionally omits the most recent commit in its log so the `--check` verification remains stable after commits.
 
-Current version: 0.1.29
+Current version: 0.1.31
