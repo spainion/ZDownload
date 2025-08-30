@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+; Adds a "Send to ZDownloadManager" context menu entry for all files
+[HKEY_CLASSES_ROOT\*\shell\SendToZDM]
+@="Send to &ZDownloadManager"
+[HKEY_CLASSES_ROOT\*\shell\SendToZDM\command]
+@="\"%LOCALAPPDATA%\\Programs\\Python\\Python38\\python.exe\" -m zdownloadmanager.cli \"%1\""
