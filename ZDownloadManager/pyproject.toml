@@ -1,0 +1,26 @@
+[project]
+name = "zdownloadmanager"
+version = "0.1.28"
+description = "Cross‑platform download manager and file organizer with resumable downloads and smart file categorisation."
+authors = [
+    { name = "ZΛMIDΛ", email = "" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "PyQt5>=5.15",
+    "requests>=2.28",
+    "python-dateutil>=2.8",
+    "tqdm>=4.64"
+]
+
+[project.scripts]
+zdm = "zdownloadmanager.cli:main"
+zdm-proto = "zdownloadmanager.integration.protocol_handler:main"
+
+[project.optional-dependencies]
+ui = ["PyQt5>=5.15"]
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
