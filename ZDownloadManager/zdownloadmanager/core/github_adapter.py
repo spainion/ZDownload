@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Optional, Dict, Any, List
 
-from github import Github
+from github import Github, InputGitTreeElement, GithubException
 
 
 class GitHubAdapter:
@@ -43,6 +43,43 @@ class GitHubAdapter:
             repo.update_file(path, message, content, existing.sha, branch=branch)
         except Exception:
             repo.create_file(path, message, content, branch=branch)
+
+    def commit_files(
+        self,
+        repo_full_name: str,
+        files: Dict[str, str],
+        message: str,
+        branch: str = "main",
+    ) -> None:
+        """Commit multiple ``files`` to ``repo_full_name`` in a single commit."""
+        repo = self._gh.get_repo(repo_full_name)
+        ref = repo.get_git_ref(f"heads/{branch}")
+        base_tree = repo.get_git_tree(ref.object.sha)
+        elements = []
+        for path, content in files.items():
+            blob = repo.create_git_blob(content, "utf-8")
+            elements.append(InputGitTreeElement(path, "100644", "blob", blob.sha))
+        tree = repo.create_git_tree(elements, base_tree)
+        parent = repo.get_git_commit(ref.object.sha)
+        commit = repo.create_git_commit(message, tree, [parent])
+        ref.edit(commit.sha)
+
+    def create_branch(
+        self, repo_full_name: str, branch: str, from_branch: str = "main"
+    ) -> None:
+        """Create ``branch`` in ``repo_full_name`` from ``from_branch``."""
+        repo = self._gh.get_repo(repo_full_name)
+        source = repo.get_branch(from_branch)
+        repo.create_git_ref(ref=f"refs/heads/{branch}", sha=source.commit.sha)
+
+    def delete_branch(self, repo_full_name: str, branch: str) -> None:
+        """Delete ``branch`` from ``repo_full_name`` if it exists."""
+        repo = self._gh.get_repo(repo_full_name)
+        try:
+            ref = repo.get_git_ref(f"heads/{branch}")
+            ref.delete()
+        except GithubException:
+            pass
 
     def create_pull_request(
         self,

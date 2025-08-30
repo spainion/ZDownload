@@ -20,6 +20,21 @@ def main() -> None:
     commit.add_argument("content", help="File content")
     commit.add_argument("--branch", default="main")
 
+    commit_multi = sub.add_parser("commit-files", help="Commit multiple files")
+    commit_multi.add_argument("repo", help="owner/repo")
+    commit_multi.add_argument("message", help="Commit message")
+    commit_multi.add_argument("files", nargs="+", help="file=content pairs")
+    commit_multi.add_argument("--branch", default="main")
+
+    branch = sub.add_parser("create-branch", help="Create a branch")
+    branch.add_argument("repo", help="owner/repo")
+    branch.add_argument("name", help="New branch name")
+    branch.add_argument("--from-branch", default="main")
+
+    del_branch = sub.add_parser("delete-branch", help="Delete a branch")
+    del_branch.add_argument("repo", help="owner/repo")
+    del_branch.add_argument("name", help="Branch name to delete")
+
     pr = sub.add_parser("create-pr", help="Open a pull request")
     pr.add_argument("repo", help="owner/repo")
     pr.add_argument("title")
@@ -48,6 +63,13 @@ def main() -> None:
 
     if args.cmd == "commit-file":
         adapter.commit_file(args.repo, args.path, args.content, args.message, branch=args.branch)
+    elif args.cmd == "commit-files":
+        files = dict(f.split("=", 1) for f in args.files)
+        adapter.commit_files(args.repo, files, args.message, branch=args.branch)
+    elif args.cmd == "create-branch":
+        adapter.create_branch(args.repo, args.name, from_branch=args.from_branch)
+    elif args.cmd == "delete-branch":
+        adapter.delete_branch(args.repo, args.name)
     elif args.cmd == "create-pr":
         url = adapter.create_pull_request(args.repo, args.title, args.body, args.head, base=args.base)
         print(url)

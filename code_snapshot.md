@@ -32,6 +32,7 @@
   - test_list_open_issues(self)
   - test_list_open_pull_requests(self)
   - test_list_languages(self)
+  - test_create_branch_and_commit_files(self)
 
 ## ZDownloadManager/tests/test_library_cli.py
 - setup_home(tmp_path)
@@ -108,6 +109,9 @@
   - __init__(self, token)
   - get_repo_info(self, full_name)
   - commit_file(self, repo_full_name, path, content, message, branch)
+  - commit_files(self, repo_full_name, files, message, branch)
+  - create_branch(self, repo_full_name, branch, from_branch)
+  - delete_branch(self, repo_full_name, branch)
   - create_pull_request(self, repo_full_name, title, body, head, base)
   - list_open_issues(self, repo_full_name, limit)
   - list_open_pull_requests(self, repo_full_name, limit)
